@@ -1,0 +1,409 @@
+{
+	"info": {
+		"_postman_id": "2d700ee5-4a39-48ca-8e51-7855cecce2e2",
+		"name": "elasticsearch",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25661375"
+	},
+	"item": [
+		{
+			"name": "Health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/_cat/health?v=true&pretty",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"_cat",
+						"health"
+					],
+					"query": [
+						{
+							"key": "v",
+							"value": "true"
+						},
+						{
+							"key": "pretty",
+							"value": null
+						}
+					]
+				},
+				"description": "Gets the health of elasticsearch node"
+			},
+			"response": []
+		},
+		{
+			"name": "Index Document",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Vivek Maniyar\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/customer/_doc/1",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"customer",
+						"_doc",
+						"1"
+					]
+				},
+				"description": "Indexes the document in elasticsearch"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Document",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/customer/_doc/1",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"customer",
+						"_doc",
+						"1"
+					]
+				},
+				"description": "Gets the document from elasticsearch using id"
+			},
+			"response": []
+		},
+		{
+			"name": "Index Documents In Bulk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "file",
+					"file": {
+						"src": "/home/vivek/Downloads/accounts.json"
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/bank/_bulk?pretty&refresh",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"bank",
+						"_bulk"
+					],
+					"query": [
+						{
+							"key": "pretty",
+							"value": null
+						},
+						{
+							"key": "refresh",
+							"value": null
+						}
+					]
+				},
+				"description": "Indexes the document in bulk in elasticsearch"
+			},
+			"response": []
+		},
+		{
+			"name": "Indices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/_cat/indices?v=true",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"_cat",
+						"indices"
+					],
+					"query": [
+						{
+							"key": "v",
+							"value": "true"
+						}
+					]
+				},
+				"description": "Lists elasticsearch indexes"
+			},
+			"response": []
+		},
+		{
+			"name": "List Documents",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"query\": { \"match_all\": {} },\n    \"sort\": [\n        { \"account_number\": \"asc\" }\n    ],\n    \"from\": 10,\n    \"size\": 10\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/bank/_search",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"bank",
+						"_search"
+					]
+				},
+				"description": "Lists all the documents in the given index"
+			},
+			"response": []
+		},
+		{
+			"name": "Search Document (match)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"query\":  { \"match\": { \"address\": \"mill lane\"} }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/bank/_search",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"bank",
+						"_search"
+					]
+				},
+				"description": "Lists all the documents matching individual terms"
+			},
+			"response": []
+		},
+		{
+			"name": "Search Document (match_phrase)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"query\":  { \"match_phrase\": { \"address\": \"mill lane\"} }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/bank/_search",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"bank",
+						"_search"
+					]
+				},
+				"description": "Lists all documents that matches the exact term"
+			},
+			"response": []
+		},
+		{
+			"name": "Search Document (bool)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"query\":  {\n        \"bool\": {\n            \"must\": [\n                { \"match\": { \"age\": \"100\" } }\n            ],\n            \"must_not\": [\n                { \"match\": { \"state\": \"ID\" } }\n            ]\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/bank/_search",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"bank",
+						"_search"
+					]
+				},
+				"description": "Lists all the documents matching the given filters"
+			},
+			"response": []
+		},
+		{
+			"name": "Search Document (range)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"query\": {\n        \"bool\": {\n            \"must\": { \"match_all\": {} },\n            \"filter\": {\n                \"range\": {\n                    \"balance\": {\n                        \"gte\": 20000,\n                        \"lte\": 30000\n                    }\n                }\n            }\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/bank/_search",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"bank",
+						"_search"
+					]
+				},
+				"description": "Lists all the documents that matches the given range filter"
+			},
+			"response": []
+		},
+		{
+			"name": "aggregation (single)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"size\": 0,\n    \"aggs\": {\n        \"group_by_state\": {\n            \"terms\": {\n                \"field\": \"state.keyword\"\n            }\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/bank/_search",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"bank",
+						"_search"
+					]
+				},
+				"description": "Aggregates (groups) the documents based on the given groupby term"
+			},
+			"response": []
+		},
+		{
+			"name": "aggregation (multiple)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"size\": 0,\n    \"aggs\": {\n        \"group_by_state\": {\n            \"terms\": {\n                \"field\": \"state.keyword\",\n                \"order\": {\n                    \"average_balance\": \"desc\"\n                }\n            },\n            \"aggs\": {\n                \"average_balance\": {\n                    \"avg\": {\n                        \"field\": \"balance\"\n                    }\n                }\n            }\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/bank/_search",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"bank",
+						"_search"
+					]
+				},
+				"description": "Aggregates (groups) the documents based on given groupby terms"
+			},
+			"response": []
+		},
+		{
+			"name": "Run Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}",
+					"host": [
+						"{{HOST}}"
+					]
+				},
+				"description": "Checks if elasticsearch is running"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "HOST",
+			"value": "http://localhost:9200",
+			"type": "string"
+		}
+	]
+}

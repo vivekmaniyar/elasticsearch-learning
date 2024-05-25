@@ -1,0 +1,34 @@
+{
+  "name": "elasticsearch-learning",
+  "version": "1.0.0",
+  "description": "elasticsearch learning project",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vivekmaniyar/elasticsearch-learning.git"
+  },
+  "engines": {
+    "node": "16.14.2",
+    "npm": "8.5.0"
+  },
+  "keywords": [
+    "elasticsearch"
+  ],
+  "author": "vivek maniyar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vivekmaniyar/elasticsearch-learning/issues"
+  },
+  "homepage": "https://github.com/vivekmaniyar/elasticsearch-learning#readme",
+  "dependencies": {
+    "@elastic/elasticsearch": "7.10.0",
+    "dotenv": "14.2.0",
+    "express": "4.17.2"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.15"
+  }
+}
